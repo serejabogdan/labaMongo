@@ -13,34 +13,32 @@ function addLessonQuery(weekDay, lessonNumber, auditorium, discipline) {
     });
 
     const XHR = request("../php/posts/lesson.php", 'POST', body);
-    XHR.onload = () => {
-        if (XHR.readyState === 4) {
-            if (XHR.status === 200) {
-                addLessonParam(groupsInput, '../php/posts/group.php');
-                const addLessonParamXHR = addLessonParam(teachersInput,  '../php/posts/teacher.php');
-                addLessonParamXHR.onload = () => {
-                    if (addLessonParamXHR.readyState === 4) {
-                        if (addLessonParamXHR.status === 200) {
-                            getTitlesForSelects(); // init query
-                            showMessage('success');
-                        }
-                        else
-                        showMessage('error');
-                    }
-                    else
-                    showMessage('error');
-               };
-            }
-            else
-            showMessage('error');
-        }
-        else
-        showMessage('error');
-            
-    };
+    XHR.onload = () => lessonOnload(XHR);
 }
 
-function addLessonParam(input, url) {
+function lessonOnload(XHR) {
+    if (XHR.readyState === 4 && XHR.status === 200) {
+        groupTeacherQuery(groupsInput, '../php/posts/group.php');
+        const groupTeacherXHR = groupTeacherQuery(teachersInput,  '../php/posts/teacher.php');
+        groupTeacherXHR.onload = () => groupAndTeacherOnload(groupTeacherXHR);
+
+        console.log('lessonOnload');
+    }
+    else
+        showMessage('error');
+}
+
+function groupAndTeacherOnload(groupTeacherXHR) {
+    if (groupTeacherXHR.readyState === 4 && groupTeacherXHR.status === 200) {
+        getTitlesForSelects(); // init query
+        showMessage('success');
+        console.log('groupAndTeacherOnload');
+    }
+    else
+    showMessage('error');
+}
+
+function groupTeacherQuery(input, url) {
     const body = JSON.stringify({
         keyValue: input.value
     });
