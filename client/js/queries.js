@@ -1,6 +1,6 @@
 // функция-щаблон для формирования запроса
 function request(
-  url = "../php/init.php",
+  url,
   typeRequest = "get",
   body = null
 ) {
@@ -10,36 +10,41 @@ function request(
   return XHR;
 }
 
-// получение названий групп, предметов и имен преподов
-function getTitlesForSelects() {
-  const XHR = request();
+function getGroups() {
+  const XHR = request('../php/gets/groups.php');
+  XHR.onload = () => {
+    let result = XHR.response;
+    
+    selectTitles.innerHTML = `<option selected disabled>Выберите группу</option>`;
+    selectTitles.innerHTML += result;
+    groupsInput.innerHTML += result;
+  };
+}
+function getAuditoriums() {
+  const XHR = request('../php/gets/teachers.php');
+  XHR.onload = () => {
+    let result = XHR.responseXML;
+    selectTeachers.innerHTML = `<option selected disabled>Выберите преподавателя</option>`;
+    for(let node of result.children[0].children) {
+      const htmlRow = `<option>${node.textContent}</option>`;
+      selectTeachers.innerHTML += htmlRow;
+      teachersInput.innerHTML += htmlRow;
+    }
+  };
+}
+function getTeachers() {
+  const XHR = request('../php/gets/auditoriums.php');
   XHR.onload = () => {
     let result = JSON.parse(
       XHR.response
     );
-    
-    clearHtmlElementsAll([selectTitles, groupsInput, selectTeachers, teachersInput, selectAuditoriums]);
-    selectTitles.innerHTML = `<option selected disabled>Выберите группу</option>`;
-    selectTeachers.innerHTML = `<option selected disabled>Выберите преподавателя</option>`;
     selectAuditoriums.innerHTML = `<option selected disabled>Выберите аудиторию</option>`;
-
-    result.forEach((item) => {
-      if (item.title) {
-        const option = `<option>${item.title}</option>`
-        selectTitles.innerHTML += option;
-        groupsInput.innerHTML += option;
-      }
-      if (item.name) {
-        const option = `<option>${item.name}</option>`
-        selectTeachers.innerHTML += option;
-        teachersInput.innerHTML += option;
-      }
-      if (item.auditorium)
-        selectAuditoriums.innerHTML += `<option>${item.auditorium}</option>`;
-    });
+    result.forEach(item => selectAuditoriums.innerHTML += `<option>${item.auditorium}</option>`);
   };
 }
-getTitlesForSelects(); // получение названий групп, предметов и имен преподов
+getGroups();
+getAuditoriums();
+getTeachers();
 
 function getLesson({ select, queryParam }) {
   const url = `../php/gets/lesson.php?${queryParam}=${select.value}`;
@@ -79,7 +84,6 @@ function createRow(obj, typeCell) {
 
     tr.append(cell);
   }
-
   table.append(tr);
 }
 

@@ -30,7 +30,6 @@ function lessonOnload(XHR) {
 
 function groupAndTeacherOnload(groupTeacherXHR) {
     if (groupTeacherXHR.readyState === 4 && groupTeacherXHR.status === 200) {
-        getTitlesForSelects(); // init query
         showMessage('success');
         console.log('groupAndTeacherOnload');
     }
