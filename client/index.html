@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/styles.css"/>
+    <link rel="stylesheet" href="./css/adding-form.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      
+      <div class="tasks">
+        <h3>Сформировать запросы и вывести расписание занятий для:</h3>
+        <ul>
+          <li>произвольной группы из списка;</li>
+          <li>произвольного преподавателя из списка;</li>
+          <li>аудитории из списка.</li>
+        </ul>
+        <p>
+          Обеспечить возможность добавления новых практических занятий (с указанием существующих группы и преподавателя) в БД средствами веб-приложения. Обратите внимание на работу с ключевыми полями.
+        </p>
+      </div>
+
+      <hr>
+
+      <button class="btn-mode btn btn-primary">Выборка</button>
+      <button class="btn-mode btn btn-outline-primary">Добавление</button>
+      <div class="fetching-data data-tab">
+        <div class="selects">
+          <select name="" id="titles" class="custom-select">
+          </select>
+          </button>
+          <select name="" id="teachers" class="custom-select">
+            
+          </select>
+          <select name="" id="auditorium" class="custom-select">
+          </select>
+        </div>
+        <table class="table table-bordered"></table>
+      </div>
+      <div class="adding-data data-tab">
+        <form class="adding-form">
+          <div class="adding-form__row">
+            <div class="adding-form__item form-group">
+              <label for="week-day">День недели</label>
+              <select name="" id="week-day" class="custom-select post">
+                <option selected>Monday</option>
+                <option>Tuesday</option>
+                <option>Wednesday</option>
+                <option>Thursday</option>
+                <option>Friday</option>
+                <option>Saturday</option>
+                <option>Sunday</option>
+              </select>
+            </div>
+            <div class="adding-form__item form-group">
+              <label for="lesson-number">Номер урока</label>
+              <select name="" id="lesson-number" class="custom-select post">
+                <option selected>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+              </select>
+            </div>
+            <div class="adding-form__item form-group">
+              <label for="auditorium-number">Номер аудитории</label>
+              <input type="text" class="form-control post" id="auditorium-number" placeholder="208i" maxlength="4">
+            </div>
+            <div class="adding-form__item form-group">
+              <label for="discipline-name">Предмет</label>
+              <input type="text" class="form-control post" id="discipline-name" placeholder="Internet Technologies">
+            </div>
+            <div class="adding-form__item form-group">
+              <label for="discipline-type">Тип дисциплины</label>
+              <input disabled type="text" class="form-control" id="discipline-type" placeholder="Тип дисциплины" value="Practical">
+            </div>
+            <div class="adding-form__item form-group">
+              <label for="group">Группа</label>
+              <select name="" id="group" class="custom-select">
+              </select>
+            </div>
+            <div class="adding-form__item form-group">
+              <label for="teacher">Преподаватель</label>
+              <select name="" id="teacher" class="custom-select">
+              </select>
+            </div>
+          </div>
+        </form>
+        <div class="submit-block">
+          <button class="submit btn btn-primary">Отправить</button>
+          <div title="success" class="list-group">
+            <li class="list-group-item list-group-item-action list-group-item-success">Успешно.</li>
+          </div>
+          <div title="warning" class="list-group">
+            <li class="list-group-item list-group-item-action list-group-item-warning">Не все поля заполнены.</li>
+          </div>
+          <div title="error" class="list-group">
+            <li class="list-group-item list-group-item-action list-group-item-danger">В этот раз не сработало.</li>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./js/definitions.js"></script>
+    <script src="./js/events.js"></script>
+    <script src="./js/form/submit.js"></script>
+    <script src="./js/form/validation.js"></script>
+    <script src="./js/queries.js"></script>
+    <script src="./js/tabs.js"></script>
+  </body>
+</html>
