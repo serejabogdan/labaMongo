@@ -5,8 +5,6 @@ include('../connection.php');
 $sql = 'SELECT DISTINCT `title` FROM groups';
 $result = prepareQuery($dbh, $sql);
 
-var_dump( $result);
-
 foreach($result as $item) {
     echo '<option>' . $item['title'] . '</option>';
 }
