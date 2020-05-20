@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 header('Cache-Control: no-cache, must-revalidate');
-require_once "../vendor/autoload.php";
+require_once "../../vendor/autoload.php";
 
 try {
     $mongo = new MongoDB\Client;
